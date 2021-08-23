@@ -67,12 +67,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Weight',
-                        hintStyle: TextStyle(
-                            fontSize: 42,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.white.withOpacity(.5))),
+                      border: InputBorder.none,
+                      hintText: 'Weight',
+                      hintStyle: TextStyle(
+                        fontSize: 42,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white.withOpacity(.5),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -80,32 +82,39 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 30,
             ),
-            GestureDetector(
-              onTap: () {
-                final _htext = _heightController.text;
-                final _wtext = _weightController.text;
-                if (_htext == "" || _wtext == "") {
-                  setState(() {
-                    _textResult = "Please enter details";
-                  });
-                } else {
-                  double _h = double.parse(_htext) / 100;
-                  double _w = double.parse(_wtext);
-                  _bmiResult = _w / (_h * _h);
-                  setState(() {
-                    if (_bmiResult < 18.50) {
-                      _textResult = "You're UnderWeight";
-                    } else if (_bmiResult >= 18.50 && _bmiResult <= 24.99) {
-                      _textResult = "You have normal weight";
-                    } else if (_bmiResult >= 25.00 && _bmiResult <= 29.99) {
-                      _textResult = "You're Overweight";
-                    } else {
-                      _textResult = "Obese!";
-                    }
-                  });
-                }
-              },
-              child: Container(
+            Container(
+              child: OutlinedButton(
+                style: TextButton.styleFrom(
+                  side: BorderSide(
+                    color: Colors.white.withOpacity(.3),
+                    width: .4,
+                  ),
+                ),
+                onPressed: () {
+                  final _htext = _heightController.text;
+                  final _wtext = _weightController.text;
+                  if (_htext == "" || _wtext == "") {
+                    setState(() {
+                      _textResult = "Please enter details";
+                      _bmiResult = 0;
+                    });
+                  } else {
+                    double _h = double.parse(_htext) / 100;
+                    double _w = double.parse(_wtext);
+                    _bmiResult = _w / (_h * _h);
+                    setState(() {
+                      if (_bmiResult < 18.50) {
+                        _textResult = "You're UnderWeight";
+                      } else if (_bmiResult >= 18.50 && _bmiResult <= 24.99) {
+                        _textResult = "You have normal weight";
+                      } else if (_bmiResult >= 25.00 && _bmiResult <= 29.99) {
+                        _textResult = "You're Overweight";
+                      } else {
+                        _textResult = "Obese!";
+                      }
+                    });
+                  }
+                },
                 child: Text(
                   "Calculate",
                   style: TextStyle(
@@ -117,19 +126,22 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 20,
             ),
-            Container(
-              child: Text(
-                _bmiResult.toStringAsFixed(2),
-                style: TextStyle(
-                  fontSize: 90,
-                  color: accentHexColor,
+            Visibility(
+              visible: (_bmiResult.toInt() != 0),
+              child: Container(
+                child: Text(
+                  _bmiResult.toStringAsFixed(2),
+                  style: TextStyle(
+                    fontSize: 60,
+                    color: accentHexColor,
+                  ),
                 ),
               ),
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             Visibility(
               visible: _textResult.isNotEmpty,
@@ -145,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
             const LeftBar(
               barWidth: 40,
@@ -163,13 +175,13 @@ class _HomeScreenState extends State<HomeScreen> {
               barWidth: 40,
             ),
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
             const RightBar(
               barWidth: 40,
             ),
             const SizedBox(
-              height: 50,
+              height: 40,
             ),
             const RightBar(
               barWidth: 40,
